@@ -1,17 +1,5 @@
 import axios from "axios";
-import { ref } from "vue";
-
-// const data = ref<string | null>(null);
-
-// export const fetchUsers = async (): Promise  => {
-//   try {
-//     const response = await axios.get("https://randomuser.me/");
-//     data.value = response.data.title;
-//     return data.value;
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//   }
-// };
+import { User } from "../types/types";
 
 const axiosInstance = axios.create({
   baseURL: "https://randomuser.me/",
@@ -21,13 +9,35 @@ export function fetchUsers() {
   return axiosInstance
     .get("api/", {
       params: {
-        inc: "gender,name,email,picture",
+        inc: "gender,name,email,picture,location,phone,cell,id",
         noinfo: true,
         results: 25,
       },
     })
     .then((response) => {
-      return response.data;
+      const users: User[] = response.data.results.map((user: any) => ({
+        email: user.email,
+        gender: user.gender,
+        firstName: user.name.first,
+        lastName: user.name.last,
+        picture: {
+          large: user.picture.large,
+          thumbnail: user.picture.thumbnail,
+        },
+        id: user.id.value,
+        location: {
+          street: {
+            number: user.location.street.number,
+            name: user.location.street.name,
+          },
+          city: user.location.city,
+          postcode: user.location.postcode,
+          country: user.location.country,
+        },
+        phone: user.phone,
+        cell: user.cell,
+      }));
+      return users;
     })
     .catch((error) => {
       console.log("Error", error);

@@ -1,12 +1,10 @@
 import { defineStore } from "pinia";
+import { User } from "../types/types";
+import { fetchUsers } from "@/services/useApi";
 
-export const useMyStore = defineStore("myStore", {
+export const useMyStore = defineStore("users", {
   state: () => ({
-    count: 0,
+    users: [] as User[],
   }),
-  actions: {
-    increment() {
-      this.count++;
-    },
-  },
+  actions: {},
 });
