@@ -1,26 +1,29 @@
-<template>
-  <input
-    type="text"
-    @input="handleInput"
-    class="input"
-    placeholder="Search"
-    onfocus="this.placeholder=''"
-    onblur="this.placeholder='Type'"
-  />
-</template>
-
 <script setup lang="ts">
-import { ref } from "vue";
-// import { filterEvents } from "@/utils/eventUtils";
+import { ref, defineEmits } from "vue";
+import debounce from "lodash/debounce";
 
-const inputValue = ref("Search");
+const searchQuery = ref("");
 
-const handleInput = (event: any) => {
-  inputValue.value = event.target.value;
+const emit = defineEmits(["search"]);
 
-  // filterEvents(inputValue.value);
-};
+const handleInput = debounce(() => {
+  emit("search", searchQuery.value);
+}, 300);
 </script>
+
+<template>
+  <div>
+    <input
+      type="text"
+      class="input"
+      placeholder="Search"
+      onfocus="this.placeholder=''"
+      onblur="this.placeholder='Type'"
+      v-model="searchQuery"
+      @input="handleInput"
+    />
+  </div>
+</template>
 
 <style scoped lang="scss">
 @import "@/scss/styles.scss";
