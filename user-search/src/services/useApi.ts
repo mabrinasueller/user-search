@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User } from "../types/types";
+import { User, ApiUser } from "../types/types";
 
 const axiosInstance = axios.create({
   baseURL: "https://randomuser.me/",
@@ -15,7 +15,7 @@ export function fetchUsers() {
       },
     })
     .then((response) => {
-      const users: User[] = response.data.results.map((user: any) => ({
+      const users: User[] = response.data.results.map((user: ApiUser) => ({
         email: user.email,
         gender: user.gender,
         firstName: user.name.first,

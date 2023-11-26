@@ -1,24 +1,49 @@
-export interface User {
+export interface ApiUser {
   email: string;
   gender: string;
   name: {
     first: string;
     last: string;
-    title: string;
   };
   picture: {
     large: string;
-    medium: string;
     thumbnail: string;
   };
+  id: {
+    value: string;
+  };
   location: {
-    number: number;
-    street: string;
+    street: {
+      number: number;
+      name: string;
+    };
+    city: string;
+    postcode: string;
+    country: string;
   };
   phone: string;
   cell: string;
-  id: {
-    name: string;
-    value?: string;
+}
+
+export interface User {
+  email: string;
+  gender: string;
+  firstName: string;
+  lastName: string;
+  picture: {
+    large: string;
+    thumbnail: string;
   };
+  id: string;
+  location: {
+    street: {
+      number: number;
+      name: string;
+    };
+    city: string;
+    postcode: string;
+    country: string;
+  };
+  phone: string;
+  cell: string;
 }
