@@ -18,12 +18,12 @@ const handleSearch = (search: string) => {
   searchValue.value = search;
 };
 
-const handleRadioFilter = (filterByGender: string) => {
+const handleGenderFilter = (filterByGender: string) => {
   store.filters.gender = filterByGender;
   radioFilter.value = filterByGender;
 };
 
-const handleUserClick = (user: User) => {
+const handleSelectedUserClick = (user: User) => {
   store.selectedUser = user;
 };
 
@@ -41,6 +41,9 @@ const filteredUsers = computed(() => {
       break;
     case "male":
       users = users.filter((user) => user.gender === "male");
+      break;
+    default:
+      return users;
   }
   if (store.filters.search !== "") {
     users = users.filter(
@@ -71,19 +74,22 @@ const getUsers = async () => {
 <template>
   <div class="flex">
     <div
-      class="w-1/3 px-6 pb-6 parent flex-col flex flex-none h-screen overflow-y-auto relative"
+      class="m:w-1/2 lg:w-1/3 px-6 pb-6 parent flex-col flex flex-none h-screen overflow-y-auto relative"
     >
       <div class="sticky child flex-1 bg-white top-0 left-0 pt-6">
         <InputSearch @search="handleSearch" />
-        <RadioFilter @filter="handleRadioFilter" />
+        <RadioFilter @filter="handleGenderFilter" />
       </div>
-      <UserList :filteredUsers="filteredUsers" @userClick="handleUserClick" />
+      <UserList
+        :filteredUsers="filteredUsers"
+        @userClick="handleSelectedUserClick"
+      />
       <Suspense>
         <InfiniteScroll @loadMore="handleShowMore"></InfiniteScroll>
       </Suspense>
     </div>
     <div
-      class="h-full w-full flex-1 bg-gradient-to-tr from-orange-400 via-red-300 to-blue-500 min-h-screen flex items-center justify-center"
+      class="h-full w-full flex-1 bg-gradient-to-tr from-orange-400 via-red-300 to-blue-500 min-h-screen flex items-center justify-center p-12"
     >
       <UserDetail :selectedUser="store.selectedUser" />
     </div>

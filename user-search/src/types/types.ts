@@ -1,6 +1,6 @@
 export interface ApiUser {
   email: string;
-  gender: string;
+  gender: "male" | "female" | "all";
   name: {
     first: string;
     last: string;
