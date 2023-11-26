@@ -1,25 +1,31 @@
 <template>
-  <div
-    v-for="user in filteredUsers"
-    :key="user.email"
-    class="user__wrapper"
-    @click="userClick(user)"
-  >
-    <div class="user__image">
-      <img :src="user.picture.thumbnail" alt="profile picture" />
-    </div>
-    <div class="user__info">
-      <div>{{ user.firstName }} {{ user.lastName }}</div>
-      <div>{{ user.email }}</div>
+  <div class="mt-6">
+    <div
+      v-for="user in filteredUsers"
+      :key="user.email"
+      class="flex flex-row p-4 mb-4 bg-white border-solid border-2 border-gray-500 cursor-pointer"
+      @click="userClick(user)"
+    >
+      <div class="mr-4">
+        <img
+          :src="user.picture.thumbnail"
+          alt="profile picture"
+          class="rounded-full"
+        />
+      </div>
+      <div class="user__info">
+        <div class="font-bold">{{ user.firstName }} {{ user.lastName }}</div>
+        <div>{{ user.email }}</div>
+      </div>
     </div>
   </div>
-  <button @click="showMore()">Show more</button>
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits, defineProps } from "vue";
+import { defineEmits, defineProps } from "vue";
 import { User } from "../types/types";
 
+// eslint-disable-next-line
 const props = defineProps<{
   filteredUsers: User[];
 }>();
@@ -28,25 +34,9 @@ const userClick = (user: User) => {
   emit("userClick", user);
 };
 
-const emit = defineEmits(["showMore", "userClick"]);
-
-const showMore = () => {
-  emit("showMore");
-};
-
-const listEl = ref(null);
-
-let currentPage = 1;
-
-// useInfiniteScroll(
-//   listEl,
-//   async () => {
-//     await usersToDisplayOnScroll();
-//   },
-//   { distance: 25 }
-// );
+const emit = defineEmits(["userClick"]);
 </script>
 
 <style type="scss">
-@import "@/scss/styles.scss";
+@import "@/styles/styles.scss";
 </style>
