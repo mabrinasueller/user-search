@@ -29,7 +29,7 @@ const props = defineProps<{ selectedUser: User | null }>();
         </div>
       </div>
       <hr class="my-4 w-full" />
-      <div class="text-xl md:text-center">
+      <div class="text-xl sm:text-center lg:text-left">
         <div v-if="selectedUser.location">
           <div class="mb-2">
             <span class="font-bold">Street:</span>
@@ -59,7 +59,7 @@ const props = defineProps<{ selectedUser: User | null }>();
         <div v-if="selectedUser.email">
           <a
             :href="'mailto:' + selectedUser.email"
-            class="mb-2 flex items-center justify-center"
+            class="mb-2 flex items-center justify-center lg:justify-start"
           >
             <span class="font-bold mr-2">Email:</span> {{ selectedUser.email }}
             <Icon icon="typcn:mail" class="cursor-pointer ml-2" />
