@@ -5,6 +5,10 @@ const axiosInstance = axios.create({
   baseURL: "https://randomuser.me/",
 });
 
+const capitalizeFirstLetter = (str: string): string => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 export function fetchUsers() {
   return axiosInstance
     .get("api/", {
@@ -18,8 +22,8 @@ export function fetchUsers() {
       const users: User[] = response.data.results.map((user: ApiUser) => ({
         email: user.email,
         gender: user.gender,
-        firstName: user.name.first,
-        lastName: user.name.last,
+        firstName: capitalizeFirstLetter(user.name.first),
+        lastName: capitalizeFirstLetter(user.name.last),
         picture: {
           large: user.picture.large,
           thumbnail: user.picture.thumbnail,
